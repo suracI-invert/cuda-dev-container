@@ -1,0 +1,6 @@
+version: '3.8'
+services:
+  bentoml:
+    build:
+      context: .
+      dockerfile: bentoml.Dockerfile
