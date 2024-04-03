@@ -1,11 +1,21 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "CUDA 12.1",
+	"name": "bentoml",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"dockerComposeFile": "docker-compose.yaml",
+	"dockerComposeFile": "../docker-compose.yaml",
 	"service": "bentoml",
-	"workspaceFolder": "/workspace/${localWorkspaceFolder}"
+	"workspaceFolder": "/workspaces/src/bentoml",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python"
+			]
+		}
+	},
+	"shutdownAction": "stopCompose"
+
+	// "workspaceFolder": "/workspace/${localWorkspaceFolder}"
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
