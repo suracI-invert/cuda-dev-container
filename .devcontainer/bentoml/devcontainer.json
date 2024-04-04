@@ -9,11 +9,12 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-python.python"
+				"ms-python.python",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	},
-	"shutdownAction": "stopCompose"
+	"shutdownAction": "none",
 
 	// "workspaceFolder": "/workspace/${localWorkspaceFolder}"
 	// Features to add to the dev container. More info: https://containers.dev/features.
@@ -23,7 +24,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
+	"postCreateCommand": "python /workspaces/.devcontainer/bentoml/install_dep.py"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

@@ -1,1 +1,3 @@
-FROM suraci345/pyenv-cuda:12.1.0-base-ubuntu22.04
+FROM pytorch/pytorch:2.2.1-cuda12.1-cudnn8-runtime
+
+RUN pip install --upgrade pip

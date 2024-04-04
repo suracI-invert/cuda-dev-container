@@ -1,1 +1,4 @@
-celery["librabbitmq,redis"]
+celery[librabbitmq,redis]
+requests
+fastapi
+uvicorn[standard]

@@ -23,6 +23,9 @@ services:
     command: sleep infinity
     volumes:
       - ..:/workspaces:cached
+    depends_on:
+      - redis
+      - rabbitmq  
     deploy:
       resources:
         reservations:
@@ -32,6 +35,8 @@ services:
               capabilities: [gpu]
     networks:
       - app
+    ports:
+      - 8000:8000
     
   redis:
     image: 'bitnami/redis:latest'

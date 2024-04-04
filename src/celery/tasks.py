@@ -1,5 +1,7 @@
 from celery import Celery
 
+from requests import Session
+
 app = Celery('tasks', backend='redis://redis', broker='amqp://guest@rabbitmq')
 
 app.conf.broker_connection_retry_on_startup = True
@@ -25,3 +27,16 @@ def matmul(a, b):
             c[i][j] = sum
     
     return c
+
+@app.task
+def call_embedding_api(text):
+    headers = {
+        'Accept': 'text/plain',
+        'Content-Type': 'application/json'
+    }
+    with Session() as s:
+        ret = s.post('http://bentoml:3000/embedding', headers=headers, json={'text': text})
+        if ret.status_code != 200:
+            raise Exception(f'API return {ret.status_code}')
+        data = ret.json()
+    return data

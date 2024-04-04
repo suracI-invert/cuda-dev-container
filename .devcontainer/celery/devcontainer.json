@@ -9,7 +9,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-python.python"
+				"ms-python.python",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	},
@@ -29,5 +30,6 @@
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "containerUser": "celery"
 	
-	"shutdownAction": "stopCompose"
+	"shutdownAction": "none",
+	"postCreateCommand": "pip install -r /workspaces/.devcontainer/celery/requirements.txt"
 }
