@@ -35,8 +35,31 @@ def call_embedding_api(text):
         'Content-Type': 'application/json'
     }
     with Session() as s:
-        ret = s.post('http://bentoml:3000/embedding', headers=headers, json={'text': text})
+        ret = s.post('http://bentoml:3000/emb', headers=headers, json={'text': text})
         if ret.status_code != 200:
             raise Exception(f'API return {ret.status_code}')
         data = ret.json()
     return data
+
+@app.task
+def call_rerank_api(text, docs):
+    headers = {
+        'Accept': 'text/plain',
+        'Content-Type': 'application/json'
+    }
+    with Session() as s:
+        ret = s.post('http://bentoml:3000/rerank', headers=headers, json={'text': text, 'docs': docs})
+        if ret.status_code != 200:
+            raise Exception(f'API return {ret.status_code}')
+        data = ret.json()
+    return data
+
+# @app.task
+# def call_mongodb(client, doc_ids):
+#     docs = find_doc(client, doc_ids)
+#     return [d['abstract'] for d in docs]
+
+# @app.task
+# def call_vectordb(client, embedding):
+#     res = search(client, embedding)
+#     return [r['id'] for r in res]

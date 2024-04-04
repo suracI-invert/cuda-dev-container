@@ -2,3 +2,6 @@ celery[librabbitmq,redis]
 requests
 fastapi
 uvicorn[standard]
+pymongo[srv]
+python-dotenv
+pymilvus
