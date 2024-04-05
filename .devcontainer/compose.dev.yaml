@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: bentoml/Dockerfile
+      target: base
     command: sleep infinity
     volumes:
       - ..:/workspaces:cached
@@ -20,6 +21,7 @@ services:
     build:
       context: .
       dockerfile: celery/Dockerfile
+      target: base
     command: sleep infinity
     volumes:
       - ..:/workspaces:cached

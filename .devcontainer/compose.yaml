@@ -1,0 +1,44 @@
+version: '3'
+services:
+  bentoml:
+    build:
+      context: .
+      dockerfile: bentoml/Dockerfile
+      target: prod
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - app
+  celery:
+    build:
+      context: .
+      dockerfile: celery/Dockerfile
+      target: prod
+    depends_on:
+      - redis
+      - rabbitmq  
+    networks:
+      - app
+    ports:
+      - 8000:8000
+    
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - app
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 15672:15672
+    networks:
+      - app
+networks:
+  app:
+    driver: bridge

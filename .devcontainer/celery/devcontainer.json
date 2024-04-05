@@ -3,7 +3,7 @@
 {
 	"name": "celery",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"dockerComposeFile": "../docker-compose.yaml",
+	"dockerComposeFile": "../compose.dev.yaml",
 	"service": "celery",
 	"workspaceFolder": "/workspaces/src/celery",
 	"customizations": {

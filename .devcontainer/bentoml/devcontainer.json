@@ -3,7 +3,7 @@
 {
 	"name": "bentoml",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"dockerComposeFile": "../docker-compose.yaml",
+	"dockerComposeFile": "../compose.dev.yaml",
 	"service": "bentoml",
 	"workspaceFolder": "/workspaces/src/bentoml",
 	"customizations": {
