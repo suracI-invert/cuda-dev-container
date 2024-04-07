@@ -7,10 +7,10 @@ import torch
 from transformers import AutoTokenizer
 
 if torch.cuda.is_available():
-    from transformers import AutoModel, AutoModelForSequenceClassification, BitsAndBytesConfig
+    from transformers import AutoModel, AutoModelForSequenceClassification, BitsAndBytesConfig #type: ignore
 else:
     from optimum.onnxruntime import ORTModel, ORTModelForSequenceClassification, ORTQuantizer # type: ignore
-    from optimum.onnxruntime.configuration import AutoQuantizationConfig # type: ignore\
+    from optimum.onnxruntime.configuration import AutoQuantizationConfig # type: ignore
 
 def load_onnx_emb(path, save_dir):
     if os.path.exists(save_dir):

@@ -29,3 +29,5 @@ docs = call_mongodb.delay(doc_ids).get()
 print(docs)
 ctx = call_rerank_api.delay('Hello, what exactly is a string?', docs).get()
 print(ctx)
+
+#https://stackoverflow.com/questions/9034091/how-to-check-task-status-in-celery
