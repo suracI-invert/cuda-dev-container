@@ -5,7 +5,7 @@ RUN pip install --upgrade pip
 FROM python:3.12.1-slim-bookworm as pre-image
 WORKDIR /downloads
 RUN pip install gdown
-RUN gdown --folders https://drive.google.com/drive/folders/1fLz0GXvPnXVe61Zg_9NNVYQIR3CDNcjG?usp=sharing
+RUN gdown --folder https://drive.google.com/drive/folders/1fLz0GXvPnXVe61Zg_9NNVYQIR3CDNcjG?usp=sharing
 
 FROM base as prod
 

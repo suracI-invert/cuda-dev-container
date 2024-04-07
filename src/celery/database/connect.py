@@ -23,6 +23,9 @@ class VectorDB:
         return self.client
     
     def __exit__(self, type, value, traceback):
+        self.close()
+
+    def close(self):
         self.client.close()
         logger.info('Vector database closed')
 
@@ -39,5 +42,8 @@ class MongoDB:
         return self.client
     
     def __exit__(self, type, value, traceback):
+        self.close()
+        
+    def close(self):
         self.client.close()
         logger.info('MongoDB closed')
