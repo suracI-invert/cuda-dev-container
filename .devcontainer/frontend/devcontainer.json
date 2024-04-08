@@ -1,11 +1,11 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "bentoml",
+	"name": "frontend",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"dockerComposeFile": "../compose.dev.yaml",
-	"service": "bentoml",
-	"workspaceFolder": "/workspaces/src/bentoml",
+	"service": "frontend",
+	"workspaceFolder": "/workspaces/src/frontend",
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -13,22 +13,22 @@
 			]
 		}
 	},
-	"shutdownAction": "none",
-
 	// "workspaceFolder": "/workspace/${localWorkspaceFolder}"
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-
+	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
+	
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "python /workspaces/.devcontainer/bentoml/install_dep.py",
-	"postStartCommand": "bentoml serve services:Models"
-
+	// "postCreateCommand": "pip3 install --user -r requirements.txt",
+	
 	// Configure tool-specific properties.
 	// "customizations": {},
-
+	
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	// "containerUser": "celery"
+	
+	"shutdownAction": "none",
+	"postCreateCommand": "pip install -r /workspaces/.devcontainer/frontend/requirements.txt"
 }

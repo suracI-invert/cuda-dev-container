@@ -13,13 +13,11 @@ WORKDIR /workspaces
 
 COPY --from=pre-image /downloads/ /workspaces/
 
-COPY bentoml/requirements /workspaces/.devcontainer/bentoml/
-COPY bentoml/install_dep.py /workspaces/.devcontainer/bentoml/
+COPY requirements /workspaces/.devcontainer/bentoml/
+COPY install_dep.py /workspaces/.devcontainer/bentoml/
 
 RUN python /workspaces/.devcontainer/bentoml/install_dep.py
 
-COPY ../src/bentoml/services.py /workspaces/src/
-
-
+COPY ../../src/bentoml/services.py /workspaces/src/
 
 CMD [ "bentoml", "serve", "src.services:Models" ]

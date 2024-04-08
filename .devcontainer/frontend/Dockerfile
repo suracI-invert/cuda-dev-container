@@ -11,4 +11,4 @@ WORKDIR /workspaces
 COPY requirements.txt /workspaces/
 RUN pip install -r requirements.txt
 
-COPY ../../src/celery/ /workspaces/
+COPY ../src/frontend/ /workspaces/
