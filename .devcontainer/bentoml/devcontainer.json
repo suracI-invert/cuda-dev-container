@@ -24,7 +24,8 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "python /workspaces/.devcontainer/bentoml/install_dep.py"
+	"postCreateCommand": "python /workspaces/.devcontainer/bentoml/install_dep.py",
+	"postStartCommand": "bentoml serve services:Models"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

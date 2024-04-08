@@ -73,7 +73,6 @@ class Models:
                 sentence_embeddings = torch.nn.functional.normalize(sentence_embeddings, p=2, dim=1).to('cpu').tolist()
         return {'embedding': sentence_embeddings}
         
-
     def __build_pair(self, q: str, docs: list[str]):
         return [(q, d) for d in docs]
     

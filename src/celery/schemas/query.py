@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
-class EmbeddingRequest(BaseModel):
+class QueryRequest(BaseModel):
     text: str
 
-class EmbeddingResponse(BaseModel):
+class QueryResponse(BaseModel):
     task_id: str
     text: str

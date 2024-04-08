@@ -71,10 +71,10 @@ def call_embedding_api(text):
         if ret.status_code != 200:
             raise Exception(f'API return {ret.status_code}')
         data = ret.json()
-    return data
+    return data['embedding']
 
 @app.task
-def call_rerank_api(text, docs):
+def call_rerank_api(docs, text):
     headers = {
         'Accept': 'text/plain',
         'Content-Type': 'application/json'
