@@ -1,10 +1,6 @@
 import os
 import logging
 
-from dotenv import load_dotenv
-
-load_dotenv('./.env', override=True)
-
 from pymilvus import MilvusClient
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -26,8 +22,9 @@ class VectorDB:
         self.close()
 
     def close(self):
-        self.client.close()
-        logger.info('Vector database closed')
+        if self.client:
+            self.client.close()
+            logger.info('Vector database closed')
 
 class MongoDB:
     def __init__(self):
@@ -45,5 +42,6 @@ class MongoDB:
         self.close()
         
     def close(self):
-        self.client.close()
-        logger.info('MongoDB closed')
+        if self.client:
+            self.client.close()
+            logger.info('MongoDB closed')

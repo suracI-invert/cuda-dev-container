@@ -10,7 +10,7 @@ from database.crud import find_doc, search
 
 from schemas.query import QueryRequest
 
-from tasks import add, matmul, call_embedding_api, call_rerank_api, ping_mongo_db, ping_vector_db, call_mongodb, call_vectordb
+from tasks import add, matmul, call_embedding_api, call_rerank_api, ping_mongo_db, ping_vector_db, call_mongodb, call_vectordb, call_gpt
 
 app = FastAPI()
 
@@ -43,7 +43,8 @@ async def query(q: QueryRequest):
             'create_embedding': call_embedding_api.s(), 
             'search_similar_documents':call_vectordb.s(), 
             'query_similar_documents':call_mongodb.s(), 
-            'rerank_similar_documents': call_rerank_api.s(q.text)}
+            'rerank_similar_documents': call_rerank_api.s(q.text),
+            'call_gpt': call_gpt.s(q.text)}
         res = q.text
         for e, t in chain.items():
             res = t.delay(res).get()

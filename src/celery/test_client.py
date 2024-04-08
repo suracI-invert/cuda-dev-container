@@ -7,6 +7,10 @@ with Session() as s:
     if result.status_code == 200:
         for l in result.iter_lines():
             # print(l)
-            print(json.loads(l))
+            data = json.loads(l)
+            print(data['stage'])
+            print('-' * 50)
+            print(data['content'])
+            print('\n' + '=' * 50 + '\n')
     
     

@@ -5,3 +5,4 @@ uvicorn[standard]
 pymongo[srv]
 python-dotenv
 pymilvus
+sseclient-py

@@ -1,3 +1,14 @@
+import os
+import json
+from dotenv import load_dotenv
+
+load_dotenv('./.env', override=True)
+
+from time import sleep
+
+from sseclient import SSEClient
+import requests
+
 from celery import Celery
 from celery.signals import worker_process_init, worker_process_shutdown
 
@@ -27,8 +38,10 @@ def shutdown_worker(**kwargs):
     global vector_db
     global mongo_db
 
-    vector_db.close()
-    mongo_db.close()
+    if vector_db:
+        vector_db.close()
+    if mongo_db:
+        mongo_db.close()
 
 @app.task
 def ping_vector_db():
@@ -84,7 +97,7 @@ def call_rerank_api(docs, text):
         if ret.status_code != 200:
             raise Exception(f'API return {ret.status_code}')
         data = ret.json()
-    return data
+    return data['scores']
 
 @app.task
 def call_mongodb(doc_ids):
@@ -97,3 +110,64 @@ def call_vectordb(embedding):
     client = vector_db.client
     res = search(client, embedding)
     return [r['id'] for r in res]
+
+@app.task
+def call_gpt(context, text):
+    url = 'https://s.aginnov.com/openai/fsse/chat/completions'
+    headers = {
+                'Connection': 'keep-alive',
+                'Accept': 'text/event-stream',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+                'Authorization': f'Bearer {os.environ['API_TOKEN']}'
+            }
+    
+    def extract_context(context):
+        context_str = '\n\n'.join([f"Retrieval score: {c['score']}\n\n{c['content']}" for c in context[:2]])
+        return context_str
+    
+
+    context_str = extract_context(context)
+
+    system_template = """You are an expert Q&A system that is trusted around the world.
+Always answer the query using the provided context information.
+Some rules to follow:
+1. Never directly reference the given context in your answer.
+2. Avoid statements like 'Based on the context, ...' or 'The context information ...' or anything along those lines."""
+
+    user_template = f"""Context information is below.
+---------------------
+{context_str}
+---------------------
+Given the context information and not prior knowledge, answer the query.
+Query: {text}
+Answer: """
+
+    msg = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {"role": "system", "content": system_template},
+            {"role": "user", "content": user_template}
+        ]
+    }
+
+    response = []
+
+    attempt = 2
+    while attempt > 0:
+        res = requests.post(url, json=msg, headers=headers, stream=True)
+        if res.status_code != 200:
+            sleep(1)
+            attempt -= 1
+            continue
+        else:
+            client = SSEClient(res)
+            for event in client.events():
+                if event.data != '[DONE]':
+                    data = json.loads(event.data)
+                    if 'content' in data['choices'][0]['delta']:
+                        response.append(data['choices'][0]['delta']['content'])
+            break
+    if attempt == 0 and len(response) == 0:
+        raise Exception('Request to GPT API failed')
+    response = ''.join(response)
+    return response
