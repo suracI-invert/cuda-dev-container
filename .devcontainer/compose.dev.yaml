@@ -52,7 +52,7 @@ services:
     networks:
       - app
     ports:
-      - 7860:7860
+      - 7000:7000
   redis:
     image: 'bitnami/redis:latest'
     environment:

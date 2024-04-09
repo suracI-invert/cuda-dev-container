@@ -1,0 +1,6 @@
+accelerate
+transformers
+bentoml
+optimum[onnxruntime]
+sentence_transformers
+bitsandbytes

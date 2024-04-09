@@ -2,8 +2,8 @@ version: '3'
 services:
   bentoml:
     build:
-      context: ./bentoml
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: .devcontainer/bentoml/Dockerfile
       target: prod
     deploy:
       resources:
@@ -16,8 +16,8 @@ services:
       - app
   celery:
     build:
-      context: ./celery
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: .devcontainer/celery/Dockerfile
       target: prod
     depends_on:
       - redis
@@ -29,15 +29,15 @@ services:
       - 8000:8000
   frontend:
     build: 
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: .devcontainer/frontend/Dockerfile
       target: prod
     depends_on:
       - celery
     networks:
       - app
     ports:
-      - 7860:7860
+      - 7000:7000
   redis:
     image: 'bitnami/redis:latest'
     environment:

@@ -8,7 +8,9 @@ FROM base as prod
 
 WORKDIR /workspaces
 
-COPY requirements.txt /workspaces/
+COPY .devcontainer/celery/requirements.txt /workspaces/
 RUN pip install -r requirements.txt
 
-COPY ../../src/celery/ /workspaces/
+COPY src/celery/ /workspaces/
+
+CMD [ "/bin/bash", "start.sh" ]

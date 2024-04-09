@@ -30,5 +30,6 @@
 	// "containerUser": "celery"
 	
 	"shutdownAction": "none",
-	"postCreateCommand": "pip install -r /workspaces/.devcontainer/celery/requirements.txt"
+	"postCreateCommand": "pip install -r /workspaces/.devcontainer/celery/requirements.txt",
+	"postStartCommand": "celery -A tasks worker & uvicorn main:app --host=0.0.0.0"
 }
