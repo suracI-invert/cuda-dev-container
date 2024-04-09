@@ -113,7 +113,7 @@ def call_vectordb(embedding):
 
 @app.task
 def call_gpt(context, text):
-    url = 'https://s.aginnov.com/openai/fsse/chat/completions'
+    url = os.environ['GPT_URL']
     headers = {
                 'Connection': 'keep-alive',
                 'Accept': 'text/event-stream',
